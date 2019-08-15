@@ -13,14 +13,12 @@ import java.util.List;
 @RestController
 public class CarrierService {
 
-    //private static final Logger logger = LogManager.getLogger(CarrierService.class);
-
     @Autowired
     private CarrierRespository carrierRespository;
 
     @GetMapping("/carriers")
     public List<Carrier> findAll() {
-        //log.info("GET all Carrier");
+        log.info("GET all Carrier");
         return carrierRespository.findAll();
     }
 
