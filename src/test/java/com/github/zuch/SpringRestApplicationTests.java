@@ -9,8 +9,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class SpringRestApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
+    @Test
+    public void test_lombok_builder() {
+        //Kenya Airways KENYA Kenya KQ KQA
+    }
 }

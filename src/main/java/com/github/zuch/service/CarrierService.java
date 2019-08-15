@@ -1,27 +1,45 @@
 package com.github.zuch.service;
 
 import com.github.zuch.dao.Carrier;
-import com.github.zuch.repository.CarrierRespository;
+import com.github.zuch.repository.CarrierRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
-@RestController
+@AllArgsConstructor
+@Service
 public class CarrierService {
 
-    @Autowired
-    private CarrierRespository carrierRespository;
+    private CarrierRepository carrierRepository;
 
-    @GetMapping("/carriers")
     public List<Carrier> findAll() {
-        log.info("GET all Carrier");
-        return carrierRespository.findAll();
+        log.info("GET all Carrier's");
+        return carrierRepository.findAll();
     }
 
-//    @PostMapping("/carriers")
-//    public List<Carrier> findAll(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public Carrier findByIata(final String iata) {
+        log.info("GET Carrier by name [{}]", iata);
+        return carrierRepository.findByIata(iata);
+    }
+
+    public synchronized boolean addCarrier(final Carrier carrier) {
+        final Carrier byIata = carrierRepository.findByIata(carrier.getIata());
+        if (byIata != null) {
+            return false;
+        } else {
+            carrierRepository.save(carrier);
+            return true;
+        }
+    }
+
+    public void updateCarrier(final Carrier carrier) {
+        carrierRepository.save(carrier);
+    }
+
+    public void deleteCarrier(final String iata) {
+        carrierRepository.delete(findByIata(iata));
+    }
 }
